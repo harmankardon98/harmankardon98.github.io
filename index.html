@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATRAS PORTFOLIO — Fotografi &amp; Videografi Komersial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F1F0EC;
+    --bg-panel:#E6E4DB;
+    --ink:#17181A;
+    --ink-soft:#5B5D57;
+    --ink-faint:#9A988E;
+    --line: rgba(23,24,26,0.14);
+    --accent:#E23D28;
+    --chip-cyan:#137E92;
+    --chip-yellow:#D89A28;
+    --chip-green:#3F7A34;
+    --paper: #FBFAF6;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .eyebrow .dot{color:var(--accent);}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px;
+    mix-blend-mode:normal;
+    transition:background .3s ease, border-color .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(241,240,236,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:0.02em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .rec{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(226,61,40,0.15);
+  }
+  nav{display:flex; gap:28px; font-size:14px; font-weight:500;}
+  nav a{position:relative; padding-bottom:2px; color:var(--ink-soft);}
+  nav a:hover{color:var(--ink);}
+  .nav-toggle{display:none; flex-direction:column; gap:4px; cursor:pointer; background:none; border:none;}
+  .nav-toggle span{width:22px; height:2px; background:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    height:100vh; min-height:640px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+    background:#101112;
+  }
+  .hero-img{
+    position:absolute; inset:0;
+    filter:grayscale(0.15) contrast(1.05) brightness(0.72);
+  }
+  .hero-img::after{content:"";}
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(16,17,18,0.15) 0%, rgba(16,17,18,0.05) 40%, rgba(16,17,18,0.75) 100%);
+  }
+  .af-corner{
+    position:absolute; width:34px; height:34px; border-color:rgba(251,250,246,0.85);
+    z-index:3;
+  }
+  .af-corner.tl{top:100px; left:32px; border-top:2px solid; border-left:2px solid;}
+  .af-corner.tr{top:100px; right:32px; border-top:2px solid; border-right:2px solid;}
+  .af-corner.bl{bottom:170px; left:32px; border-bottom:2px solid; border-left:2px solid;}
+  .af-corner.br{bottom:170px; right:32px; border-bottom:2px solid; border-right:2px solid;}
+  .hud{
+    position:absolute; top:110px; right:56px; z-index:3;
+    font-family:var(--font-mono); font-size:12px; color:#F4F2EA;
+    text-align:right; line-height:1.9; letter-spacing:0.02em;
+    text-shadow:0 1px 3px rgba(0,0,0,0.4);
+  }
+  .hud .rec-tag{color:#FF6A52; display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-bottom:6px;}
+  .hud .rec-tag .blip{width:6px; height:6px; border-radius:50%; background:#FF6A52;}
+  .hero-content{position:relative; z-index:3; padding:0 32px 80px; width:100%;}
+  .hero-content .inner{max-width:1180px; margin:0 auto;}
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    color:#FBFAF6;
+    font-size:clamp(44px, 8vw, 96px);
+    line-height:0.98;
+    letter-spacing:-0.02em;
+    max-width:900px;
+  }
+  .hero p.sub{
+    color:rgba(251,250,246,0.78);
+    font-size:17px;
+    max-width:460px;
+    margin-top:22px;
+  }
+  .hero-eyebrow{color:rgba(251,250,246,0.65); margin-bottom:18px;}
+  .scroll-cue{
+    position:absolute; bottom:28px; left:32px; z-index:3;
+    font-family:var(--font-mono); font-size:11px; color:rgba(251,250,246,0.6);
+    display:flex; align-items:center; gap:10px;
+    letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .scroll-cue::before{content:""; width:22px; height:1px; background:rgba(251,250,246,0.5);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:110px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:56px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(30px, 4vw, 44px);
+    letter-spacing:-0.01em;
+    margin-top:8px;
+  }
+  .section-head p{color:var(--ink-soft); max-width:360px; font-size:15px;}
+
+  /* ---------- CONTACT SHEET / WORK ---------- */
+  .sheet{background:var(--bg-panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .frames{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .frame{
+    position:relative; background:var(--paper);
+    aspect-ratio:4/5; overflow:hidden;
+    cursor:pointer;
+  }
+  .frame .sprockets{
+    position:absolute; top:0; left:0; right:0; height:14px; z-index:2;
+    display:flex; justify-content:space-between; padding:0 6px;
+    align-items:center;
+    background:rgba(16,17,18,0.85);
+  }
+  .frame .sprockets span{width:4px; height:6px; background:rgba(251,250,246,0.5);}
+  .frame .frame-num{
+    position:absolute; top:18px; left:8px; z-index:2;
+    font-family:var(--font-mono); font-size:11px; color:#F4F2EA;
+    background:rgba(16,17,18,0.7); padding:2px 6px;
+  }
+  .frame .frame-img{position:absolute; inset:14px 0; filter:grayscale(1) contrast(1.05); transition:filter .5s ease, transform .6s ease;}
+  .frame:hover .frame-img{filter:grayscale(0); transform:scale(1.04);}
+  .frame-caption{
+    position:absolute; left:0; right:0; bottom:0; z-index:2;
+    padding:10px 12px;
+    background:linear-gradient(0deg, rgba(16,17,18,0.88), rgba(16,17,18,0));
+    color:#F4F2EA;
+  }
+  .frame-caption .client{font-family:var(--font-display); font-weight:600; font-size:15px;}
+  .frame-caption .exif{
+    font-family:var(--font-mono); font-size:10.5px; color:rgba(244,242,234,0.75);
+    margin-top:3px; letter-spacing:0.02em;
+  }
+
+  /* ---------- ABOUT / SPEC SHEET ---------- */
+  .about{display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:start;}
+  .about-photo{
+    aspect-ratio:4/5; overflow:hidden; background:var(--bg-panel);
+    border:1px solid var(--line);
+  }
+  .about-photo img{filter:grayscale(0.3) contrast(1.05);}
+  .about-strip{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--line); border:1px solid var(--line); border-top:none;
+  }
+  .about-strip .cell{aspect-ratio:1/1; overflow:hidden;}
+  .about-strip .cell img{filter:grayscale(1) contrast(1.05); transition:filter .5s ease, transform .6s ease;}
+  .about-strip .cell:hover img{filter:grayscale(0); transform:scale(1.05);}
+  .about-copy p{color:var(--ink-soft); font-size:16px; max-width:520px; margin-bottom:18px;}
+  .spec-table{
+    margin-top:34px; border-top:1px solid var(--line);
+    font-family:var(--font-mono); font-size:13px;
+  }
+  .spec-row{
+    display:flex; justify-content:space-between; padding:13px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .spec-row .k{color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.08em; font-size:11px;}
+  .spec-row .v{color:var(--ink); text-align:right;}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .service{background:var(--paper); padding:38px 30px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between;}
+  .service .idx{font-family:var(--font-mono); font-size:12px; color:var(--accent);}
+  .service h3{font-family:var(--font-display); font-weight:600; font-size:22px; margin:22px 0 12px;}
+  .service p{color:var(--ink-soft); font-size:14.5px;}
+
+  /* ---------- CLIENTS / CALIBRATION STRIP ---------- */
+  .cal-strip{border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .cal-inner{display:flex; align-items:center; gap:0;}
+  .cal-chip{width:14px; height:52px; flex-shrink:0;}
+  .cal-chip:nth-child(1){background:#137E92;}
+  .cal-chip:nth-child(2){background:#D89A28;}
+  .cal-chip:nth-child(3){background:#3F7A34;}
+  .cal-chip:nth-child(4){background:#E23D28;}
+  .clients-marquee{
+    flex:1; display:flex; align-items:center; gap:56px;
+    overflow:hidden; padding:0 40px; height:52px;
+  }
+  .clients-marquee span{
+    font-family:var(--font-display); font-weight:600; font-size:16px;
+    color:var(--ink-faint); white-space:nowrap; letter-spacing:0.01em;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:#101112; color:#F4F2EA; padding:130px 0;}
+  .contact .eyebrow{color:rgba(244,242,234,0.55);}
+  .contact h2{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(34px, 6vw, 62px);
+    letter-spacing:-0.02em; margin:16px 0 40px; max-width:760px;
+  }
+  .contact-grid{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:40px;}
+  .contact-cta{
+    display:inline-flex; align-items:center; gap:12px;
+    font-family:var(--font-mono); font-size:14px;
+    border:1px solid rgba(244,242,234,0.35);
+    padding:16px 26px;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .contact-cta:hover{background:var(--accent); border-color:var(--accent); color:#101112;}
+  .contact-meta{display:flex; gap:56px; flex-wrap:wrap;}
+  .contact-meta .k{font-family:var(--font-mono); font-size:11px; color:rgba(244,242,234,0.5); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;}
+  .contact-meta .v{font-size:15px;}
+
+  footer{
+    background:#101112; color:rgba(244,242,234,0.5);
+    padding:22px 0; font-family:var(--font-mono); font-size:11px;
+    border-top:1px solid rgba(244,242,234,0.12);
+    display:flex; justify-content:space-between;
+  }
+
+  /* reveal on scroll */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  @media (max-width:860px){
+    nav{
+      position:fixed; top:64px; left:0; right:0; bottom:0;
+      background:var(--bg); flex-direction:column; padding:32px;
+      transform:translateX(100%); transition:transform .3s ease;
+      z-index:49;
+    }
+    nav.open{transform:translateX(0);}
+    .nav-toggle{display:flex;}
+    .about{grid-template-columns:1fr;}
+    .frames{grid-template-columns:repeat(2, 1fr);}
+    .services-grid{grid-template-columns:1fr;}
+    .hud{display:none;}
+    .af-corner.bl, .af-corner.br{bottom:140px;}
+  }
+  @media (max-width:520px){
+    .frames{grid-template-columns:1fr;}
+    .contact-meta{gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo"><span class="rec"></span>ATRAS PORTFOLIO</div>
+  <nav id="siteNav">
+    <a href="#karya">Karya</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#layanan">Layanan</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Buka menu"><span></span><span></span><span></span></button>
+</header>
+
+<section class="hero">
+  <div class="hero-img"><img src="img/sapphire-bg.jpg" alt="Product hero shot"></div>
+  <div class="hero-scrim"></div>
+  <div class="af-corner tl"></div>
+  <div class="af-corner tr"></div>
+  <div class="af-corner bl"></div>
+  <div class="af-corner br"></div>
+  <div class="hud">
+    <div class="rec-tag"><span class="blip"></span>REC</div>
+    <div>f/8 &nbsp;1/125s &nbsp;ISO 100</div>
+    <div>85MM &nbsp;WB 5600K</div>
+  </div>
+  <div class="hero-content">
+    <div class="inner">
+      <div class="eyebrow hero-eyebrow"><span class="dot">●</span> Fotografi &amp; Videografi Komersial</div>
+      <h1>Membingkai produk<br>dengan presisi.</h1>
+      <p class="sub">Di balik setiap frame, ada cerita yang layak dikenang.
+                     Saya percaya bahwa visual bukan hanya tentang apa yang terlihat, 
+                     tetapi juga tentang apa yang dirasakan. Dengan perpaduan fotografi 
+                     dan videografi, setiap momen diubah menjadi karya yang mampu berbicara 
+                     tanpa banyak kata.</p>
+    </div>
+  </div>
+  <div class="scroll-cue">Gulir untuk melihat karya</div>
+</section>
+
+<section id="karya" class="sheet">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Contact Sheet — 01</div>
+        <h2>Karya terpilih</h2>
+      </div>
+      <p>Setiap frame diambil dari sesi produksi asli untuk klien F&amp;B, kecantikan, dan lifestyle. Arahkan kursor untuk melihat hasil warna akhir.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:110px;">
+    <div class="frames reveal" id="frameGrid"></div>
+  </div>
+</section>
+
+<section id="tentang">
+  <div class="wrap about">
+    <div class="about-photo-col reveal">
+      <div class="about-photo">
+        <img src="img/atras-02.jpg" alt="Atras Halim">
+      </div>
+      <div class="about-strip">
+        <div class="cell"><img src="img/atras-01.jpg" alt="Atras Halim - candid"></div>
+        <div class="cell"><img src="img/atras-03.jpg" alt="Atras Halim - candid"></div>
+      </div>
+    </div>
+    <div class="about-copy reveal">
+      <div class="eyebrow">Di Balik Lensa</div>
+      <h2 style="font-family:var(--font-display); font-weight:600; font-size:clamp(28px,4vw,38px); margin:14px 0 22px;">Atras Halim — dijalankan oleh mata yang terlatih untuk detail.</h2>
+      <p>Saya adalah seorang Content Creator, Fotografer, Videografer, Digital Marketing Specialist, dan Web Developer yang telah berkarya sejak tahun 2016. 
+        Berpengalaman dalam menciptakan konten visual yang kreatif, mengembangkan strategi pemasaran digital yang efektif, serta membangun website yang modern 
+        dan fungsional. Dengan perpaduan kreativitas dan teknologi, saya berkomitmen menghadirkan solusi digital yang berkualitas, inovatif, dan memberikan hasil yang berdampak.</p>
+      <p>Setiap proyek dikerjakan dengan pendekatan teknis: pencahayaan terukur, kalibrasi warna, dan komposisi yang konsisten dengan panduan brand klien — hasil dari jam terbang bertahun-tahun di industri konten.</p>
+      <div class="spec-table">
+        <div class="spec-row"><span class="k">Nama</span><span class="v">Atras Halim</span></div>
+        <div class="spec-row"><span class="k">Pengalaman</span><span class="v">Sejak 2016 · dunia konten &amp; visual</span></div>
+        <div class="spec-row"><span class="k">Spesialisasi</span><span class="v">Produk, F&amp;B, e-commerce, iklan</span></div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="layanan" class="sheet">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Layanan</div>
+        <h2>Yang bisa dikerjakan</h2>
+      </div>
+      <p>Paket disesuaikan dengan skala produksi — dari sesi produk harian hingga kampanye multi-hari.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:110px;">
+    <div class="services-grid reveal">
+      <div class="service">
+        <span class="idx">f/11</span>
+        <div>
+          <h3>Fotografi Produk</h3>
+          <p>Still life dan flat lay untuk katalog, e-commerce, dan marketplace. Latar putih bersih atau gaya lifestyle sesuai brand.</p>
+        </div>
+      </div>
+      <div class="service">
+        <span class="idx">24FPS</span>
+        <div>
+          <h3>Videografi Komersial</h3>
+          <p>Video pendek untuk iklan, konten media sosial, dan profil brand — dari konsep, syuting, hingga editing.</p>
+        </div>
+      </div>
+      <div class="service">
+        <span class="idx">RGB</span>
+        <div>
+          <h3>Arahan Visual</h3>
+          <p>Pendampingan styling, moodboard, dan konsistensi warna lintas proyek supaya visual brand tetap terjaga.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cal-strip">
+  <div class="cal-inner">
+    <div class="cal-chip"></div><div class="cal-chip"></div><div class="cal-chip"></div><div class="cal-chip"></div>
+    <div class="clients-marquee">
+      
+      <span>BANK SYARIAH INDONESIA</span>
+      <span>SAPPHIRE</span>
+      <span>GRAND KEISHA</span>
+    </div>
+  </div>
+</section>
+
+<section id="kontak" class="contact">
+  <div class="wrap">
+    <div class="eyebrow">Mulai Proyek</div>
+    <h2>Punya produk yang siap dibingkai dengan baik?</h2>
+    <div class="contact-grid">
+      <a class="contact-cta" href="mailto:atrasathaya8@gmail.com">atrasathaya8@gmail.com ↗</a>
+      <div class="contact-meta">
+        <div><div class="k">Telepon / WA</div><div class="v">0877-6478-6005</div></div>
+        <div><div class="k">Lokasi</div><div class="v">INDONESIA</div></div>
+        <div><div class="k">Instagram</div><div class="v">@atomic_blonde57</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <span>© 2026 ATRAS PORTFOLIO</span>
+    <span>FRM. 000 — 024 · KOMERSIAL &amp; PRODUK</span>
+  </div>
+</footer>
+
+<script>
+  const projects = [
+    {seed:"sapphire-01", client:"Sapphire — Detail Tenun", detail:"f/5.6 · 1/125 · 100mm macro"},
+    {seed:"sapphire-02", client:"Sapphire — Sarung Tenun", detail:"f/8 · 1/160 · 50mm"},
+    {seed:"sapphire-03", client:"Sapphire — Koleksi Gantung", detail:"f/6.3 · 1/125 · 85mm"},
+    {seed:"sapphire-04", client:"Sapphire — Koleksi Gantung", detail:"f/6.3 · 1/125 · 50mm"},
+    {seed:"sapphire-05", client:"Sapphire — Tekstur Kain", detail:"f/7.1 · 1/160 · 85mm"},
+    {seed:"sapphire-06", client:"Sapphire — Outdoor Look", detail:"f/4 · 1/200 · 50mm"},
+    {seed:"sapphire-07", client:"Sapphire — Palet Warna", detail:"f/9 · 1/125 · 100mm macro"},
+    {seed:"sapphire-08", client:"Sapphire — Studio Gelap", detail:"f/5.6 · 1/100 · 85mm"},
+    {seed:"sapphire-09", client:"Sapphire — Motif Songket", detail:"f/8 · 1/160 · 50mm"},
+    {seed:"sapphire-10", client:"Sapphire — Detail Border", detail:"f/6.3 · 1/125 · 85mm"},
+    {seed:"sapphire-11", client:"Sapphire — Kain Terurai", detail:"f/5.6 · 1/100 · 50mm"},
+    {seed:"sapphire-12", client:"Sapphire — Flat Detail", detail:"f/8 · 1/160 · 60mm"},
+    {seed:"bsi-01-flyer", client:"BSI — Meliput Acara Besar BSI Kantor Pusat pada Acara USA", detail:"Event Coverage · Appreciation Night"},
+    {seed:"bsi-02-angkie", client:"BSI — Meliput Acara Besar BSI Kantor Pusat pada Acara USA", detail:"Event Coverage · Speaker Segment"},
+    {seed:"bsi-03-motivational", client:"BSI — Meliput Acara Besar BSI Kantor Pusat pada Acara USA", detail:"Event Coverage · Motivational Session"},
+    {seed:"bsi-04-bg", client:"BSI — Meliput Acara Besar BSI Kantor Pusat pada Acara USA", detail:"Event Coverage · Stage Visual"},
+    {seed:"bsi-05-bodtalk", client:"BSI — Meliput Acara Besar BSI Kantor Pusat pada Acara USA", detail:"Event Coverage · BOD Talk"},
+    {seed:"liquid-01", client:"Perilisan Liquid Baru Ndarboy Genk di Liquid Bar n Kitchen", detail:"Event Coverage · Live Performance"},
+    {seed:"liquid-02", client:"Perilisan Liquid Baru Ndarboy Genk di Liquid Bar n Kitchen", detail:"Event Coverage · Live Performance"},
+    {seed:"liquid-03", client:"Perilisan Liquid Baru Ndarboy Genk di Liquid Bar n Kitchen", detail:"Event Coverage · Live Performance"},
+    {seed:"liquid-04", client:"Perilisan Liquid Baru Ndarboy Genk di Liquid Bar n Kitchen", detail:"Event Coverage · Crowd Moment"}
+  ];
+  const grid = document.getElementById('frameGrid');
+  projects.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'frame';
+    el.innerHTML = `
+      <div class="sprockets">${'<span></span>'.repeat(10)}</div>
+      <div class="frame-num">FRM. ${String(i+1).padStart(3,'0')}</div>
+      <div class="frame-img"><img src="img/${p.seed}.jpg" alt="${p.client}"></div>
+      <div class="frame-caption">
+        <div class="client">${p.client}</div>
+        <div class="exif">${p.detail}</div>
+      </div>`;
+    grid.appendChild(el);
+  });
+
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('siteNav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
